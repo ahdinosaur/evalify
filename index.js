@@ -6,8 +6,6 @@ module.exports = function(filename, opts) {
 
   var files = opts && opts.files || opts.f
 
-  console.log("filename", filename, "opts", opts)
-
   if (typeof files == 'string') {
     files = [files]
   }
