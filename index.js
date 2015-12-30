@@ -1,24 +1,24 @@
 var through = require('through2')
 var fs = require('fs')
 var path = require('path')
+var minimatch = require('minimatch')
 
 module.exports = function(filename, opts) {
-
   var files = opts && opts.files || opts.f
 
   if (typeof files == 'string') {
     files = [files]
   }
 
-  if (!files || !inPaths(filename, files, process.cwd())) {
+  if (!files || !inPaths(filename, files)) {
     return through()
   }
 
   return through(
-    function transform(chunk, enc, next) {
+    function transform (chunk, enc, next) {
       next()
     },
-    function flush(done) {
+    function flush (done) {
       delete require.cache[filename]
       var moduleBody = 'module.exports = ' + JSON.stringify(require(filename))
       this.push(moduleBody)
@@ -28,8 +28,8 @@ module.exports = function(filename, opts) {
   )
 }
 
-function inPaths(file, paths, cwd) {
-  return paths.some(function(p){
-    return path.resolve(cwd, p) === path.resolve(cwd, file)
+function inPaths(file, paths) {
+  return paths.some(function(path){
+    return minimatch(file, path)
   })
 }

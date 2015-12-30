@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/ahdinosaur/evalify#readme",
   "dependencies": {
+    "minimatch": "^3.0.0",
     "through2": "^2.0.0"
   },
   "devDependencies": {
