@@ -1,6 +1,6 @@
 var through = require('through2')
 var fs = require('fs')
-var path = require('path')
+var Path = require('path')
 var minimatch = require('minimatch')
 
 module.exports = function(filename, opts) {
@@ -28,8 +28,12 @@ module.exports = function(filename, opts) {
   )
 }
 
-function inPaths(file, paths) {
-  return paths.some(function(path){
-    return minimatch(file, path)
+function inPaths (file, paths) {
+  return paths.some(function (path) {
+    if (Path.isAbsolute(path)) {
+      return minimatch(file, path)
+    } else {
+      return minimatch(file, Path.join(process.cwd(), path))
+    }
   })
 }

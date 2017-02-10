@@ -51,9 +51,11 @@ browserify entry.js -t [ evalify -f '**/to-eval.js' ]
 using your `package.json`:
 
 ```
-"transform": [
-  ["evalify", { files: [ "**/to-eval.js" ] } ]
-]
+"browserify": {
+  "transform": [
+    ["evalify", { files: [ "**/to-eval.js" ] } ]
+  ]
+}
 ```
 
 ## license
